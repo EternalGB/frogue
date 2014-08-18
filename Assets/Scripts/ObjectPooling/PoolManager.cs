@@ -51,5 +51,14 @@ public class PoolManager : MonoBehaviour
 		}
 	}
 
+	public ObjectPool GetNewUntrackedPool(GameObject pooledObject, int pooledAmount, bool growable)
+	{
+		ObjectPool pool = ((GameObject)GameObject.Instantiate(poolPrefab))
+			.GetComponent<ObjectPool>();
+		pool.Init(pooledObject,pooledAmount,growable);
+		pool.gameObject.name = pooledObject.gameObject.name + "Pool";
+		return pool;
+	}
+
 }
 

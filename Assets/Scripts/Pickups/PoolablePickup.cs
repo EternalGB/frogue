@@ -6,20 +6,8 @@ public class PoolablePickup : PoolableObject
 
 	public float recycleOffset;
 
-	protected override void Init ()
-	{
-		
-	}
-	
-	protected override void PreDestroy ()
-	{
-		
-	}
-	
-	protected override void Reset ()
-	{
-		
-	}
+
+
 
 	void Update()
 	{

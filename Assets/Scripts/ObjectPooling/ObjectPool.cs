@@ -12,14 +12,7 @@ public class ObjectPool : MonoBehaviour
 	public bool growable = true;
 
 	List<GameObject> pool;
-
-
-	void Start()
-	{
-		if(pooledObject != null)
-			Init(pooledObject, pooledAmount, growable);
-	}
-
+	
 	public void Init(GameObject pooledObject, int pooledAmount, bool growable) 
 	{
 		pool = new List<GameObject>();
@@ -48,6 +41,16 @@ public class ObjectPool : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public bool ObjectAvailable()
+	{
+		for(int i = 0; i < pool.Count; i++) {
+			if(pool[i] && !pool[i].activeInHierarchy) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

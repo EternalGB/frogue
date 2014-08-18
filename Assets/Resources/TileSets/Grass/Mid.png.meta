@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 0af7088e3bb63904e8e5aa728a678fae
+guid: 82d839b851b456544bfe5ffb7ed437c7
 TextureImporter:
   fileIDToRecycleName:
-    21300000: grassHalf
-    21300002: grassBlock
+    21300000: slice03_03
+    21300002: Mid
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

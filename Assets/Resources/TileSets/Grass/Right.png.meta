@@ -1,6 +1,9 @@
 fileFormatVersion: 2
-guid: af108726df48e234dbadb453efb297e5
+guid: 83cd6152a26a9fd48a8539b77eba5be2
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: slice15_15
+    21300002: Right
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -24,9 +27,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

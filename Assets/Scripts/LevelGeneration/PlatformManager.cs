@@ -4,11 +4,10 @@ using System.Collections.Generic;
 public class PlatformManager : MonoBehaviour
 {
 
-	public int numToGen;
+	public int platformPoolSize;
 	public Transform start;
 	public int minWidth, maxWidth;
 	public Vector2 minGap, maxGap;
-	public int numPlats;
 
 	public GameObject platformRep;
 	public TileSet tileSet;
@@ -22,7 +21,7 @@ public class PlatformManager : MonoBehaviour
 	void Start()
 	{
 
-		platforms = PoolManager.Instance.GetNewUntrackedPool(platformRep,numToGen,false);
+		platforms = PoolManager.Instance.GetNewUntrackedPool(platformRep,platformPoolSize,false);
 
 		nextPos = start.position;
 

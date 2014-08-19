@@ -9,13 +9,13 @@ public class TileSet : MonoBehaviour
 	Dictionary<string, Sprite> tiles;
 	public float tileSize;
 	public PhysicsMaterial2D physicsMaterial;
+	public int difficulty;
 
 	void Awake()
 	{
 		tiles = new Dictionary<string, Sprite>();
 		foreach(Sprite rep in tileReps) {
 			tiles.Add(rep.name,rep);
-			print ("Added " + rep.name + " to tileset " + name);
 		}
 	}
 

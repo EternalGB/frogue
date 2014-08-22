@@ -16,11 +16,13 @@ public class PoolablePlatform : PoolableObject
 
 	Rect tileRect;
 	List<SpriteRenderer> tiles;
+	List<SpriteRenderer> decorations;
 
 	void Awake()
 	{
 		boxCollider = GetComponent<BoxCollider2D>();
 		tiles = new List<SpriteRenderer>();
+		decorations = new List<SpriteRenderer>();
 	}
 
 	public void CreatePlatform(int width, Vector3 position, TileSet tileSet)
@@ -32,12 +34,14 @@ public class PoolablePlatform : PoolableObject
 		boxCollider.size = new Vector2(actualWidth,tileSet.tileSize);
 		boxCollider.sharedMaterial = tileSet.physicsMaterial;
 		SetSprites();
+		if(tileSet.HasPlatformDecorations)
+			Decorate();
 	}
 
 	void SetSprites()
 	{
 		if(tiles.Count < width) {
-			AddTiles(width - tiles.Count);
+			AddSpriteRenderers(tiles,width - tiles.Count);
 		}
 		Sprite nextTile;
 		if(width == 1)
@@ -56,19 +60,41 @@ public class PoolablePlatform : PoolableObject
 		}
 	} 
 
+	void Decorate()
+	{
+		int numDecorations = Random.Range (0,width);
+		if(decorations.Count < numDecorations) {
+			AddSpriteRenderers(decorations,numDecorations - decorations.Count);
+		}
+		Sprite nextDec;
+		Vector3 nextLoc;
+		for(int i = 0; i < numDecorations; i++) {
+			nextDec = tileSet.platformDecorations[Random.Range(0,tileSet.platformDecorations.Count)];
+			//TODO add a little variation to the positions
+			nextLoc = transform.position - 
+				new Vector3(actualWidth/2 - tileSet.tileSize/2 - Random.Range (0,width)*tileSet.tileSize,-tileSet.tileSize/2);
+			decorations[i].enabled = true;
+			decorations[i].sprite = nextDec;
+			decorations[i].transform.position = nextLoc;
+		}
+	}
+
 	void OnDisable()
 	{
 		foreach(SpriteRenderer sr in tiles)
 			if(sr != null)
 				sr.enabled = false;
+		foreach(SpriteRenderer sr in decorations)
+			if(sr != null)
+				sr.enabled = false;
 	}
 
-	void AddTiles(int amount)
+	void AddSpriteRenderers(List<SpriteRenderer> renderers, int amount)
 	{
 		for(int i = 0; i < amount; i++) {
-			SpriteRenderer tile = (new GameObject()).AddComponent<SpriteRenderer>();
-			tile.enabled = false;
-			tiles.Add(tile);
+			SpriteRenderer sr = (new GameObject()).AddComponent<SpriteRenderer>();
+			sr.enabled = false;
+			renderers.Add(sr);
 		}
 	}
 

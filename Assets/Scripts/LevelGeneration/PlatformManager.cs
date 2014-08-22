@@ -83,8 +83,13 @@ public class PlatformManager : MonoBehaviour
 				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
 				Random.Range (minGap.y, maxGap.y));
 
-			if(activeObst < numObst && Random.value < obstChance) {
-				if(Random.value < 0.5)
+			if(activeObst < numObst && tileSet.HasObst && Random.value < 0.1) {
+				if(tileSet.HasAirObst && tileSet.HasPlatformObst) {
+					if(Random.value < 0.5)
+						GenAirObstacle(width);
+					else
+						GenPlatformObstacle(width);
+				} else if(tileSet.HasAirObst)
 					GenAirObstacle(width);
 				else
 					GenPlatformObstacle(width);

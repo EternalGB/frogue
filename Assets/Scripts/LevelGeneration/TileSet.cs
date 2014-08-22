@@ -13,6 +13,21 @@ public class TileSet : MonoBehaviour
 	public PhysicsMaterial2D physicsMaterial;
 	public int difficulty;
 
+	public bool HasAirObst
+	{
+		get {return airObstacles != null && airObstacles.Count > 0;}
+	}
+
+	public bool HasPlatformObst
+	{
+		get {return platformObstacles != null && platformObstacles.Count > 0;}
+	}
+
+	public bool HasObst
+	{
+		get {return HasAirObst || HasPlatformObst;}
+	}
+
 	void Awake()
 	{
 		tiles = new Dictionary<string, Sprite>();

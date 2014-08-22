@@ -9,13 +9,15 @@ public class FrogController : MonoBehaviour
 	public Transform dragBall;
 	public float maxPower;
 	public float distPowerRatio;
-	public float mouseSensitivity;
+	public float aimSensitivity;
 	public LineRenderer predictor;
 	public int predictionResolution;
 
 	public TongueController tongue;
 	float maxDist;
-	
+
+	public LayerMask killLayer;
+
 	Vector3 ballMove = Vector3.zero;
 
 	bool onGround;
@@ -65,7 +67,7 @@ public class FrogController : MonoBehaviour
 			dragBall.GetComponent<SpriteRenderer>().enabled = true;
 			ballMove.x = Input.GetAxis("Mouse X");
 			ballMove.y = Input.GetAxis("Mouse Y");
-			dragBall.transform.localPosition += ballMove*mouseSensitivity;
+			dragBall.transform.localPosition += ballMove*aimSensitivity;
 			dragBall.transform.localPosition = Vector3.ClampMagnitude(dragBall.transform.localPosition,maxDist);
 			Vector3 nextVel = ((transform.position - dragBall.position)*distPowerRatio);
 			predictor.enabled = true;
@@ -111,6 +113,17 @@ public class FrogController : MonoBehaviour
 		return res;
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		//if in the kill layer
+		if((killLayer.value &1 << col.gameObject.layer) != 0) {
+			Die();
+		}
+	}
 
+	void Die()
+	{
+		Application.LoadLevel(0);
+	}
 
 }

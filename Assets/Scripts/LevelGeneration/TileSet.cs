@@ -8,6 +8,8 @@ public class TileSet : MonoBehaviour
 	public List<Sprite> tileReps;
 	Dictionary<string, Sprite> tiles;
 	public float tileSize;
+	public List<GameObject> airObstacles;
+	public List<GameObject> platformObstacles;
 	public PhysicsMaterial2D physicsMaterial;
 	public int difficulty;
 

@@ -83,28 +83,28 @@ public class PlatformManager : MonoBehaviour
 				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
 				Random.Range (minGap.y, maxGap.y));
 
-			if(activeObst < numObst && tileSet.HasObst && Random.value < 0.1) {
+			if(activeObst < numObst && tileSet.HasObst && Random.value < 0.25) {
 				if(tileSet.HasAirObst && tileSet.HasPlatformObst) {
 					if(Random.value < 0.5)
-						GenAirObstacle(width);
+						GenAirObstacle(pp.actualWidth);
 					else
-						GenPlatformObstacle(width);
+						GenPlatformObstacle(pp.actualWidth);
 				} else if(tileSet.HasAirObst)
-					GenAirObstacle(width);
+					GenAirObstacle(pp.actualWidth);
 				else
-					GenPlatformObstacle(width);
+					GenPlatformObstacle(pp.actualWidth);
 			}
 
 		}
 
 	}
 
-	void GenAirObstacle(int width)
+	void GenAirObstacle(float width)
 	{
 		if(tileSet.airObstacles.Count > 0) {
-			float widthf = (float)width;
+
 			GameObject obstRep = tileSet.airObstacles[Random.Range(0,tileSet.airObstacles.Count-1)];
-			Vector2 pos = nextPos + new Vector2(Random.Range (-widthf,widthf),Random.Range (4f,6f));
+			Vector2 pos = nextPos + new Vector2(Random.Range (-width/2,width/2),Random.Range (4f,6f));
 			GameObject obst = PoolManager.Instance.GetPoolByRepresentative(obstRep).GetPooled();
 			if(obst != null) {
 				obst.transform.position = pos;
@@ -114,12 +114,11 @@ public class PlatformManager : MonoBehaviour
 		}
 	}
 
-	void GenPlatformObstacle(int width)
+	void GenPlatformObstacle(float width)
 	{
 		if(tileSet.platformObstacles.Count > 0) {
-			float widthf = (float)width;
 			GameObject obstRep = tileSet.platformObstacles[Random.Range(0,tileSet.airObstacles.Count-1)];
-			Vector2 pos = nextPos + new Vector2(Random.Range (-widthf,widthf),3);
+			Vector2 pos = nextPos + new Vector2(Random.Range (-width/2,width/2),3);
 			GameObject obst = PoolManager.Instance.GetPoolByRepresentative(obstRep).GetPooled();
 			if(obst != null) {
 				obst.transform.position = pos;

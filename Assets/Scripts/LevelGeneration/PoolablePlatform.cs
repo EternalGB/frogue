@@ -9,7 +9,7 @@ public class PoolablePlatform : PoolableObject
 
 	public int width;
 	public TileSet tileSet;
-	float actualWidth = 0;
+	public float actualWidth = 0;
 	float recycleOffset = 20;
 
 	BoxCollider2D boxCollider;
@@ -76,6 +76,7 @@ public class PoolablePlatform : PoolableObject
 			decorations[i].enabled = true;
 			decorations[i].sprite = nextDec;
 			decorations[i].transform.position = nextLoc;
+			decorations[i].sortingOrder = -10;
 		}
 	}
 

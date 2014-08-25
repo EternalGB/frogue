@@ -5,7 +5,7 @@ using System.Collections;
 public class PoolableSprite : PoolableObject
 {
 
-	float recycleOffset = 20;
+	float recycleOffset = 40;
 
 	void Update()
 	{
@@ -14,9 +14,10 @@ public class PoolableSprite : PoolableObject
 			Destroy();
 	}
 
-	void OnDisable()
+	void Destroy()
 	{
 		transform.parent = null;
+		gameObject.SetActive (false);
 	}
 
 }

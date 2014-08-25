@@ -140,7 +140,7 @@ public class PlatformManager : MonoBehaviour
 		print ("CHANGING LEVEL");
 		if(tsDict.ContainsKey(difficulty)) {
 			List<TileSet> potentialTileSets = tsDict[difficulty];
-			tileSet = potentialTileSets[Random.Range(0,potentialTileSets.Count-1)];
+			tileSet = potentialTileSets[Random.Range(0,potentialTileSets.Count)];
 		}
 
 	}

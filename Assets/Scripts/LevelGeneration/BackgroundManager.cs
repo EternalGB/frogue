@@ -63,6 +63,10 @@ public class BackgroundManager : MonoBehaviour
 			obj.transform.parent = parent;
 			obj.transform.position = Vector3.zero;
 			obj.transform.localPosition = pos;
+			if(parent.GetInstanceID() == middleLayer.GetInstanceID())
+				obj.GetComponent<SpriteRenderer>().sortingLayerName = "Middleground";
+			else
+				obj.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
 			obj.SetActive(true);
 		}
 
@@ -78,7 +82,10 @@ public class BackgroundManager : MonoBehaviour
 		GameObject p = panelQueue.Dequeue();
 		frontLinePos += panelWidth;
 		p.transform.localPosition = new Vector3(frontLinePos,p.transform.localPosition.y);
-		p.renderer.material.mainTexture = pm.tileSet.backdrop;
+		p.renderer.material = pm.tileSet.backdrop;
+		p.renderer.material.mainTextureOffset = 
+			new Vector2(Random.Range (-p.renderer.material.mainTexture.width,p.renderer.material.mainTexture.width),
+			            Random.Range (-p.renderer.material.mainTexture.height,p.renderer.material.mainTexture.height));
 		panelQueue.Enqueue(p);
 	}
 

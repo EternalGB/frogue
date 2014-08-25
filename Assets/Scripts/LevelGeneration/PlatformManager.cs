@@ -8,6 +8,8 @@ public class PlatformManager : MonoBehaviour
 	public Transform start;
 	public int minWidth, maxWidth;
 	public Vector2 minGap, maxGap;
+	public float minHeight;
+	public float maxHeight;
 
 	public GameObject platformRep;
 	public TileSet tileSet;
@@ -79,9 +81,13 @@ public class PlatformManager : MonoBehaviour
 			int width = Random.Range(minWidth,maxWidth);
 			pp.CreatePlatform(width,nextPos,tileSet);
 			platform.SetActive(true);
+			//generate a new position, clamped inside the height bounds
 			nextPos += new Vector2(
 				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
-				Random.Range (minGap.y, maxGap.y));
+				Mathf.Clamp(Random.Range (minGap.y, maxGap.y),minHeight,maxHeight));
+
+
+
 
 			if(activeObst < numObst && tileSet.HasObst && Random.value < 0.25) {
 				if(tileSet.HasAirObst && tileSet.HasPlatformObst) {

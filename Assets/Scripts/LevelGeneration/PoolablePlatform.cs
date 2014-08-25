@@ -95,6 +95,7 @@ public class PoolablePlatform : PoolableObject
 		for(int i = 0; i < amount; i++) {
 			SpriteRenderer sr = (new GameObject()).AddComponent<SpriteRenderer>();
 			sr.enabled = false;
+			sr.sortingLayerName = "Foreground";
 			renderers.Add(sr);
 		}
 	}

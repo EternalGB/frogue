@@ -9,6 +9,9 @@ public class TileSet : MonoBehaviour
 	Dictionary<string, Sprite> tiles;
 	public float tileSize;
 	public List<Sprite> platformDecorations;
+	public Texture backdrop;
+	public List<GameObject> backgroundObj;
+	public List<GameObject> middlegroundObj;
 	public List<GameObject> airObstacles;
 	public List<GameObject> platformObstacles;
 	public PhysicsMaterial2D physicsMaterial;

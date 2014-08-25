@@ -36,6 +36,7 @@ public class FrogController : MonoBehaviour
 		get 
 		{
 			Vector3 mousePos = Input.mousePosition;
+			mousePos.z = transform.position.z - Camera.main.transform.position.z;
 			return Camera.main.ScreenToWorldPoint(mousePos);
 		}
 	}

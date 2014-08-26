@@ -17,7 +17,8 @@ public class PoolableSprite : PoolableObject
 	void Destroy()
 	{
 		transform.parent = null;
-		gameObject.SetActive (false);
+		GetComponent<SpriteRenderer>().sortingLayerID = 0;
+		base.Destroy();
 	}
 
 }

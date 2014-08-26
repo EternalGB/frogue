@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class PlatformManager : MonoBehaviour
 {
 
+	public BackgroundManager bm;
 	public int platformPoolSize;
 	public Transform start;
 	public int minWidth, maxWidth;
@@ -28,10 +29,11 @@ public class PlatformManager : MonoBehaviour
 	public AnimationCurve numObstCurve;
 	public int numObst = 0;
 	public int activeObst = 0;
-	float obstChance = 0.2f;
+	float obstChance = 0.25f;
 
 	int numLevelChanges = 0;
 	float levelThreshold = 100;
+	
 
 	void Start()
 	{
@@ -52,11 +54,16 @@ public class PlatformManager : MonoBehaviour
 
 	void Update()
 	{
+		if(bm.ObjAvailable && Random.value < bm.spawnChance)
+			bm.CreateBackgroundObj(tileSet, nextPos);
+
+		if(bm.PanelNeedsRecycling)
+			bm.RecyclePanel(bm.frontLinePos + bm.panelWidth,tileSet);
+
 		if(platforms.ObjectAvailable())
 			GenPlatform();
 
-
-		//TODO change tileset
+				//TODO change tileset
 		//probably based on distance milestones?
 		difficulty = (int)tileSetDifficultyCurve.Evaluate(FrogController.Instance.distanceTraveled/distanceScaling);
 
@@ -89,7 +96,7 @@ public class PlatformManager : MonoBehaviour
 
 
 
-			if(activeObst < numObst && tileSet.HasObst && Random.value < 0.25) {
+			if(activeObst < numObst && tileSet.HasObst && Random.value < obstChance) {
 				if(tileSet.HasAirObst && tileSet.HasPlatformObst) {
 					if(Random.value < 0.5)
 						GenAirObstacle(pp.actualWidth);
@@ -141,6 +148,7 @@ public class PlatformManager : MonoBehaviour
 		if(tsDict.ContainsKey(difficulty)) {
 			List<TileSet> potentialTileSets = tsDict[difficulty];
 			tileSet = potentialTileSets[Random.Range(0,potentialTileSets.Count)];
+			bm.RecyclePanel(nextPos.x,tileSet);
 		}
 
 	}

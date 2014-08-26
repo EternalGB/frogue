@@ -5,16 +5,18 @@ using System.Collections;
 public class PoolableSprite : PoolableObject
 {
 
-	float recycleOffset = 40;
+	float recycleOffset = 20;
 
 	void Update()
 	{
 		//recycle the platform if we go too far
-		if(FrogController.Instance.distanceTraveled > transform.position.x + recycleOffset)
+		if(FrogController.Instance.distanceTraveled > transform.position.x + recycleOffset) {
+
 			Destroy();
+		}
 	}
 
-	void Destroy()
+	public override void Destroy()
 	{
 		transform.parent = null;
 		GetComponent<SpriteRenderer>().sortingLayerID = 0;

@@ -52,10 +52,10 @@ public class PlatformManager : MonoBehaviour
 		PoolableObstacle.ObjDestroyed += HandleDestroyedObstacle;
 	}
 
+
 	void Update()
 	{
-		if(bm.ObjAvailable && Random.value < bm.spawnChance)
-			bm.CreateBackgroundObj(tileSet, nextPos);
+
 
 		if(bm.PanelNeedsRecycling)
 			bm.RecyclePanel(bm.frontLinePos + bm.panelWidth,tileSet);
@@ -108,6 +108,9 @@ public class PlatformManager : MonoBehaviour
 					GenPlatformObstacle(pp.actualWidth);
 			}
 
+			//add some background decorations
+			if(bm.ObjAvailable && Random.value < bm.spawnChance)
+				bm.CreateBackgroundObj(tileSet, nextPos);
 		}
 
 	}

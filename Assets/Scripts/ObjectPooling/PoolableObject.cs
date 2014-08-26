@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class PoolableObject : MonoBehaviour
 {
 
-	public void Destroy()
+	public virtual void Destroy()
 	{
 		gameObject.SetActive (false);
 	}

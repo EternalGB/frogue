@@ -17,10 +17,10 @@ public class PoolableObstacle : PoolableObject
 		}
 	}
 
-	void Destroy()
+	public override void Destroy()
 	{
-		base.Destroy();
 		ObjDestroyed(gameObject);
+		base.Destroy();
 	}
 
 }

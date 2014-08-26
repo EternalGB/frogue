@@ -55,6 +55,7 @@ public class BackgroundManager : MonoBehaviour
 	{
 		panels.Sort(PanelSorter.panelSort());
 		frontLinePos = panels[panels.Count-1].transform.position.x;
+		PoolableBackgroundComponent.ObjDestroyed += HandleDestroyedBackgroundObj;
 	}
 
 	public void CreateBackgroundObj(TileSet tileSet, Vector3 center)
@@ -128,10 +129,13 @@ public class BackgroundManager : MonoBehaviour
 	{
 		Transform parent = destroyed.transform.parent;
 		if(parent != null) {
+
 			if(parent.GetInstanceID() == middleLayer.GetInstanceID())
 				numMiddlegroundActive--;
 			else
 				numBackgroundActive--;
+		} else {
+			print ("Background obj destroyed with no parent");
 		}
 	}
 

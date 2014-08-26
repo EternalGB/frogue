@@ -8,8 +8,9 @@ public class PoolableBackgroundComponent : PoolableSprite
 	public static event DestroyHandler ObjDestroyed;
 
 
-	void Destroy()
+	public override void Destroy()
 	{
+		print ("Destroying " + transform.parent.name);
 		ObjDestroyed(gameObject);
 		base.Destroy();
 	}

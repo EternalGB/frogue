@@ -81,8 +81,8 @@ public class BackgroundManager : MonoBehaviour
 		if(rep != null && parent != null) {
 			GameObject obj = PoolManager.Instance.GetPoolByRepresentative(rep).GetPooled();
 			obj.transform.parent = parent;
-			obj.transform.position = Vector3.zero;
-			obj.transform.localPosition = pos;
+			obj.transform.position = new Vector3(pos.x,pos.y,parent.position.z);
+			obj.transform.localScale = rep.transform.localScale;
 			if(parent.GetInstanceID() == middleLayer.GetInstanceID()) {
 				obj.GetComponent<SpriteRenderer>().sortingLayerName = "Middleground";
 				numMiddlegroundActive++;
@@ -91,6 +91,7 @@ public class BackgroundManager : MonoBehaviour
 				numBackgroundActive++;
 			}
 			obj.SetActive(true);
+			print ("In tileset " + tileSet.name + " creating " + rep.name);
 		}
 	}
 

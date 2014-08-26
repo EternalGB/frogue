@@ -5,11 +5,11 @@ using System.Collections;
 public class PoolableSprite : PoolableObject
 {
 
-	float recycleOffset = 20;
+	float recycleOffset = 30;
 
 	void Update()
 	{
-		//recycle the platform if we go too far
+		//recycle the sprite if we go too far
 		if(FrogController.Instance.distanceTraveled > transform.position.x + recycleOffset) {
 
 			Destroy();

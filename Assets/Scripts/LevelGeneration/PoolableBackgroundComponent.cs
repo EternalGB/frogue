@@ -10,7 +10,7 @@ public class PoolableBackgroundComponent : PoolableSprite
 
 	public override void Destroy()
 	{
-		print ("Destroying " + transform.parent.name);
+		//print ("Destroying " + transform.parent.name);
 		ObjDestroyed(gameObject);
 		base.Destroy();
 	}

@@ -88,13 +88,6 @@ public class PlatformManager : MonoBehaviour
 			int width = Random.Range(minWidth,maxWidth);
 			pp.CreatePlatform(width,nextPos,tileSet);
 			platform.SetActive(true);
-			//generate a new position, clamped inside the height bounds
-			nextPos += new Vector2(
-				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
-				Mathf.Clamp(Random.Range (minGap.y, maxGap.y),minHeight,maxHeight));
-
-
-
 
 			if(activeObst < numObst && tileSet.HasObst && Random.value < obstChance) {
 				if(tileSet.HasAirObst && tileSet.HasPlatformObst) {
@@ -111,6 +104,11 @@ public class PlatformManager : MonoBehaviour
 			//add some background decorations
 			if(bm.ObjAvailable && Random.value < bm.spawnChance)
 				bm.CreateBackgroundObj(tileSet, nextPos);
+
+			//generate a new position, clamped inside the height bounds
+			nextPos += new Vector2(
+				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
+				Mathf.Clamp(Random.Range (minGap.y, maxGap.y),minHeight,maxHeight));
 		}
 
 	}

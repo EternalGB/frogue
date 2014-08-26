@@ -63,7 +63,8 @@ public class BackgroundManager : MonoBehaviour
 		GameObject rep = null;
 		Transform parent = null;
 		Vector2 pos = center + RandomisationUtilities.RandomInsideBounds(spawnArea);
-		if(numBackgroundActive < numBackgroundObj && numMiddlegroundActive < numMiddlegroundObj) {
+		if(tileSet.backgroundObj.Count > 0 && tileSet.middlegroundObj.Count > 0 &&
+			numBackgroundActive < numBackgroundObj && numMiddlegroundActive < numMiddlegroundObj) {
 			if(Random.value < 0.5) {
 				rep = RandomisationUtilities.GetRandomElement(tileSet.backgroundObj);
 				parent = backLayer;
@@ -71,17 +72,18 @@ public class BackgroundManager : MonoBehaviour
 				rep = RandomisationUtilities.GetRandomElement(tileSet.middlegroundObj);
 				parent = middleLayer;
 			}
-		} else if (numBackgroundActive < numBackgroundObj) {
+		} else if (tileSet.backgroundObj.Count > 0 && numBackgroundActive < numBackgroundObj) {
 			rep = RandomisationUtilities.GetRandomElement(tileSet.backgroundObj);
 			parent = backLayer;
-		} else if(numMiddlegroundActive < numMiddlegroundObj) {
+		} else if(tileSet.middlegroundObj.Count > 0 && numMiddlegroundActive < numMiddlegroundObj) {
 			rep = RandomisationUtilities.GetRandomElement(tileSet.middlegroundObj);
 			parent = middleLayer;
 		}
 		if(rep != null && parent != null) {
 			GameObject obj = PoolManager.Instance.GetPoolByRepresentative(rep).GetPooled();
 			obj.transform.parent = parent;
-			obj.transform.position = new Vector3(pos.x,pos.y,parent.position.z);
+			//move into position using any offsets on the rep
+			obj.transform.position = new Vector3(pos.x,pos.y,parent.position.z + rep.transform.position.z);
 			obj.transform.localScale = rep.transform.localScale;
 			if(parent.GetInstanceID() == middleLayer.GetInstanceID()) {
 				obj.GetComponent<SpriteRenderer>().sortingLayerName = "Middleground";

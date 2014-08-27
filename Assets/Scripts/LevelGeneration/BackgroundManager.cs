@@ -56,6 +56,7 @@ public class BackgroundManager : MonoBehaviour
 		panels.Sort(PanelSorter.panelSort());
 		frontLinePos = panels[panels.Count-1].transform.position.x;
 		PoolableBackgroundComponent.ObjDestroyed += HandleDestroyedBackgroundObj;
+
 	}
 
 	public void CreateBackgroundObj(TileSet tileSet, Vector3 center)
@@ -103,10 +104,9 @@ public class BackgroundManager : MonoBehaviour
 		panels.RemoveAt(0);
 		frontLinePos = nextPos;
 		p.transform.localPosition = new Vector3(frontLinePos,p.transform.localPosition.y);
-		p.renderer.material = tileSet.backdrop;
-		p.renderer.material.mainTextureOffset = 
-			new Vector2(Random.Range (-p.renderer.material.mainTexture.width,p.renderer.material.mainTexture.width),
-			            Random.Range (-p.renderer.material.mainTexture.height,p.renderer.material.mainTexture.height));
+		SetPanelTextures(p,tileSet);
+		//p.renderer.material = tileSet.backdrop;
+		//p.renderer.material.mainTextureOffset = new Vector2(Random.Range (0f,1f), Random.Range (0f,1f));
 		//Find where the new panel should go and update the panels after it to the new tileSet
 		int position = -1;
 		for(int i = 0; i < panels.Count; i++) {
@@ -121,11 +121,31 @@ public class BackgroundManager : MonoBehaviour
 			position = panels.Count-1;
 		}
 		for(int i = position; i < panels.Count; i++) {
-			panels[i].renderer.material = tileSet.backdrop;
+			SetPanelTextures(panels[i],tileSet);
 			panels[i].transform.localPosition = p.transform.localPosition
 				+ new Vector3((i-position)*panelWidth,0);
 		}
 		frontLinePos = panels[panels.Count-1].transform.localPosition.x;
+	}
+
+	static float[] textureScales = {-1,0,1};
+
+	void SetPanelTextures(GameObject p, TileSet tileSet)
+	{
+		MeshRenderer[] cRenderers = p.GetComponentsInChildren<MeshRenderer>();
+		foreach(MeshRenderer renderer in cRenderers) {
+			renderer.material = tileSet.backdrop;
+			renderer.material.mainTextureScale = new Vector2(RandomisationUtilities.GetRandomElement(textureScales),
+			                                                 RandomisationUtilities.GetRandomElement(textureScales));
+			//renderer.material.mainTextureOffset = new Vector2(Random.Range (0f,0.25f), Random.Range (0f,0.25f));
+		}
+	}
+
+	public void InitBackground(TileSet tileSet)
+	{
+		foreach(GameObject panel in panels) {
+			SetPanelTextures(panel,tileSet);
+		}
 	}
 
 	void HandleDestroyedBackgroundObj(GameObject destroyed)

@@ -50,6 +50,7 @@ public class PlatformManager : MonoBehaviour
 		}
 
 		PoolableObstacle.ObjDestroyed += HandleDestroyedObstacle;
+		bm.InitBackground(tileSet);
 	}
 
 

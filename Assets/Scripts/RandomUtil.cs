@@ -15,5 +15,10 @@ public class RandomisationUtilities
 	{
 		return list[Random.Range (0,list.Count)];
 	}
+
+	public static T GetRandomElement<T>(T[] array)
+	{
+		return array[Random.Range (0,array.Length)];
+	}
 }
 

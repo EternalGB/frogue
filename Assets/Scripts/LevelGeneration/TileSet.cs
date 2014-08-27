@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class TileSet : MonoBehaviour
 {
 
-
-	public List<Sprite> tileReps;
-	Dictionary<string, Sprite> tiles;
+	public List<List<string>> test;
+	public List<TileList> tileReps;
+	Dictionary<string, List<Sprite>> tiles;
 	public float tileSize;
 	public List<Sprite> platformDecorations;
 	public Material backdrop;
@@ -39,15 +39,20 @@ public class TileSet : MonoBehaviour
 
 	void Awake()
 	{
-		tiles = new Dictionary<string, Sprite>();
-		foreach(Sprite rep in tileReps) {
-			tiles.Add(rep.name,rep);
+		tiles = new Dictionary<string, List<Sprite>>();
+		foreach(TileList rep in tileReps) {
+			tiles.Add(rep.tileName,rep.tiles);
 		}
+	}
+
+	public Sprite GetTile(string type, int i)
+	{
+		return tiles[type][i];
 	}
 
 	public Sprite GetTile(string type)
 	{
-		return tiles[type];
+		return RandomisationUtilities.GetRandomElement(tiles[type]);
 	}
 
 }

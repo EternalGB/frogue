@@ -63,21 +63,21 @@ public class BackgroundManager : MonoBehaviour
 	{
 		GameObject rep = null;
 		Transform parent = null;
-		Vector2 pos = center + RandomisationUtilities.RandomInsideBounds(spawnArea);
+		Vector2 pos = center + RandomUtil.RandomInsideBounds(spawnArea);
 		if(tileSet.backgroundObj.Count > 0 && tileSet.middlegroundObj.Count > 0 &&
 			numBackgroundActive < numBackgroundObj && numMiddlegroundActive < numMiddlegroundObj) {
 			if(Random.value < 0.5) {
-				rep = RandomisationUtilities.GetRandomElement(tileSet.backgroundObj);
+				rep = RandomUtil.GetRandomElement(tileSet.backgroundObj);
 				parent = backLayer;
 			} else {
-				rep = RandomisationUtilities.GetRandomElement(tileSet.middlegroundObj);
+				rep = RandomUtil.GetRandomElement(tileSet.middlegroundObj);
 				parent = middleLayer;
 			}
 		} else if (tileSet.backgroundObj.Count > 0 && numBackgroundActive < numBackgroundObj) {
-			rep = RandomisationUtilities.GetRandomElement(tileSet.backgroundObj);
+			rep = RandomUtil.GetRandomElement(tileSet.backgroundObj);
 			parent = backLayer;
 		} else if(tileSet.middlegroundObj.Count > 0 && numMiddlegroundActive < numMiddlegroundObj) {
-			rep = RandomisationUtilities.GetRandomElement(tileSet.middlegroundObj);
+			rep = RandomUtil.GetRandomElement(tileSet.middlegroundObj);
 			parent = middleLayer;
 		}
 		if(rep != null && parent != null) {
@@ -135,8 +135,8 @@ public class BackgroundManager : MonoBehaviour
 		MeshRenderer[] cRenderers = p.GetComponentsInChildren<MeshRenderer>();
 		foreach(MeshRenderer renderer in cRenderers) {
 			renderer.material = tileSet.backdrop;
-			renderer.material.mainTextureScale = new Vector2(RandomisationUtilities.GetRandomElement(textureScales),
-			                                                 RandomisationUtilities.GetRandomElement(textureScales));
+			renderer.material.mainTextureScale = new Vector2(RandomUtil.GetRandomElement(textureScales),
+			                                                 RandomUtil.GetRandomElement(textureScales));
 			//renderer.material.mainTextureOffset = new Vector2(Random.Range (0f,0.25f), Random.Range (0f,0.25f));
 		}
 	}

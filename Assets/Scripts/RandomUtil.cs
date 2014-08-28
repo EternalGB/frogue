@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomisationUtilities
+public class RandomUtil
 {
 
 	public static Vector3 RandomInsideBounds(Bounds bounds)

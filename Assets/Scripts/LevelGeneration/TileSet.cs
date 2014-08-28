@@ -52,7 +52,7 @@ public class TileSet : MonoBehaviour
 
 	public Sprite GetTile(string type)
 	{
-		return RandomisationUtilities.GetRandomElement(tiles[type]);
+		return RandomUtil.GetRandomElement(tiles[type]);
 	}
 
 }

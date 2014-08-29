@@ -21,6 +21,7 @@ public class FrogController : MonoBehaviour
 	Vector3 ballMove = Vector3.zero;
 
 	bool onGround;
+	bool canJump = false;
 	Animator anim;
 
 	public float distanceTraveled = 0;
@@ -64,7 +65,11 @@ public class FrogController : MonoBehaviour
 		maxDist = maxPower/distPowerRatio;
 		onGround = Physics2D.OverlapCircle(groundCheck.position,0.2f,groundLayer);
 		anim.SetBool("onGround",onGround);
-		if(Input.GetMouseButton(0)) {
+		canJump = onGround;
+		#if UNITY_EDITOR
+			canJump = true;
+		#endif
+		if(Input.GetMouseButton(0) && canJump) {
 			dragBall.GetComponent<SpriteRenderer>().enabled = true;
 			ballMove.x = Input.GetAxis("Mouse X");
 			ballMove.y = Input.GetAxis("Mouse Y");
@@ -73,7 +78,7 @@ public class FrogController : MonoBehaviour
 			Vector3 nextVel = ((transform.position - dragBall.position)*distPowerRatio);
 			predictor.enabled = true;
 			UpdatePredictions(transform.position,nextVel,5, predictionResolution);
-		} else if(Input.GetMouseButtonUp(0)) {
+		} else if(Input.GetMouseButtonUp(0) && canJump) {
 			dragBall.GetComponent<SpriteRenderer>().enabled = false;
 			//fire the frog
 			rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);

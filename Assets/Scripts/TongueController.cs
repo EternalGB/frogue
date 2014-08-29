@@ -10,6 +10,7 @@ public class TongueController : MonoBehaviour
 	bool isReturning = false;
 	public float maxDist;
 	public float tongueSpeed;
+	public float pullPower;
 	Vector2 destination;
 	float distanceTravelled = 0;
 	public float cooldown;
@@ -18,6 +19,7 @@ public class TongueController : MonoBehaviour
 	LineRenderer lr;
 	SpriteRenderer sr;
 	public Transform mouth;
+	public LayerMask grippable;
 
 	void Start()
 	{
@@ -104,7 +106,11 @@ public class TongueController : MonoBehaviour
 		if(isLicking) {
 			isReturning = true;
 			if(col.gameObject.layer == LayerMask.NameToLayer("Pickup")) {
+
 				col.transform.parent = transform;
+			} else if(Util.InLayerMask(grippable,col.gameObject.layer)) {
+				Vector3 force = (transform.position - FrogController.Instance.transform.position).normalized*pullPower;
+				FrogController.Instance.rigidbody2D.velocity += (Vector2)force;
 			}
 		}
 	}

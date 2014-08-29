@@ -10,7 +10,7 @@ public class PowerDrawer : MonoBehaviour
 	void Update()
 	{
 		lr.SetPosition(0,transform.position);
-		lr.SetPosition(1,frogue.position);
+		lr.SetPosition(1,new Vector3(frogue.position.x,frogue.position.y,transform.position.z));
 
 	}
 

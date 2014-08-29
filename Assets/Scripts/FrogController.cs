@@ -90,7 +90,9 @@ public class FrogController : MonoBehaviour
 		predictor.SetPosition(0,initPos);
 		float timeDiff = maxTime/(numSlices-1);
 		for(int i = 1; i < numSlices; i++) {
-			predictor.SetPosition(i,KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i));
+			Vector3 prediction = KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i);
+			prediction.z = predictor.transform.position.z;
+			predictor.SetPosition(i,prediction);
 		}
 
 	}

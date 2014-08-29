@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: cd8886381fdf9094cb871096525990cb
+guid: 4766749de604b4f4baddf9ae6f9d2f92
 TextureImporter:
   fileIDToRecycleName:
-    21300000: zone
+    21300000: zoneNoDir
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -19,7 +19,7 @@ TextureImporter:
     heightScale: .25
     normalMapFilter: 0
   isReadable: 0
-  grayScaleToAlpha: 0
+  grayScaleToAlpha: 1
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1

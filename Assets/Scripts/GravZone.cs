@@ -11,6 +11,8 @@ public class GravZone : PoolableObstacle
 	Vector2 gravity;
 	public Sprite directionalSprite;
 	public Sprite noDirectionSprite;
+	public Material directionalMat;
+	public Material noDirectionMat;
 	public Transform zoneArea;
 	SpriteRenderer sr;
 	BoxCollider2D boxCol;
@@ -39,9 +41,11 @@ public class GravZone : PoolableObstacle
 			sr.sprite = directionalSprite;
 			Quaternion rot = Quaternion.FromToRotation(Vector2.right,newGrav.normalized);
 			transform.rotation = rot;
+			zoneArea.renderer.material = directionalMat;
 		} else {
 			sr.sprite = noDirectionSprite;
 			transform.rotation = Quaternion.identity;
+			zoneArea.renderer.material = noDirectionMat;
 		}
 		flowSpeed = gravity.magnitude/2;
 	}

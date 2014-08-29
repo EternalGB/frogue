@@ -110,6 +110,7 @@ public class TongueController : MonoBehaviour
 				col.transform.parent = transform;
 			} else if(Util.InLayerMask(grippable,col.gameObject.layer)) {
 				Vector3 force = (transform.position - FrogController.Instance.transform.position).normalized*pullPower;
+				FrogController.Instance.rigidbody2D.velocity = Vector2.zero;
 				FrogController.Instance.rigidbody2D.velocity += (Vector2)force;
 			}
 		}

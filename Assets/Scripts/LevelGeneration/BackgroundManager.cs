@@ -128,13 +128,13 @@ public class BackgroundManager : MonoBehaviour
 		frontLinePos = panels[panels.Count-1].transform.localPosition.x;
 	}
 
-	static float[] textureScales = {-1,0,1};
+	static float[] textureScales = {-1,1};
 
 	void SetPanelTextures(GameObject p, TileSet tileSet)
 	{
 		MeshRenderer[] cRenderers = p.GetComponentsInChildren<MeshRenderer>();
 		foreach(MeshRenderer renderer in cRenderers) {
-			renderer.material = tileSet.backdrop;
+			renderer.material = RandomUtil.GetRandomElement(tileSet.backdrops);
 			renderer.material.mainTextureScale = new Vector2(RandomUtil.GetRandomElement(textureScales),
 			                                                 RandomUtil.GetRandomElement(textureScales));
 			//renderer.material.mainTextureOffset = new Vector2(Random.Range (0f,0.25f), Random.Range (0f,0.25f));

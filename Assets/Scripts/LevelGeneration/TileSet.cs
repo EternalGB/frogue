@@ -9,7 +9,7 @@ public class TileSet : MonoBehaviour
 	Dictionary<string, List<Sprite>> tiles;
 	public float tileSize;
 	public List<Sprite> platformDecorations;
-	public Material backdrop;
+	public List<Material> backdrops;
 	public List<GameObject> backgroundObj;
 	public List<GameObject> middlegroundObj;
 	public List<GameObject> airObstacles;

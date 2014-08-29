@@ -45,9 +45,11 @@ public class SpaceshipAlien : MonoBehaviour
 	{
 		GameObject proj = projPool.GetPooled();
 		proj.SetActive(true);
+		Physics2D.IgnoreCollision(collider2D,proj.collider2D);
 		proj.transform.position = firingPos.position;
 		proj.transform.rotation = Quaternion.FromToRotation(Vector3.right, firingDir);
 		proj.rigidbody2D.velocity = firingDir*speed;
+
 		canFire = false;
 		StartCoroutine(Timers.Countdown(cooldown,EnableFire));
 	}

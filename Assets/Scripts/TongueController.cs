@@ -106,7 +106,6 @@ public class TongueController : MonoBehaviour
 		if(isLicking) {
 			isReturning = true;
 			if(col.gameObject.layer == LayerMask.NameToLayer("Pickup")) {
-
 				col.transform.parent = transform;
 			} else if(Util.InLayerMask(grippable,col.gameObject.layer)) {
 				Vector3 force = (transform.position - FrogController.Instance.transform.position).normalized*pullPower;

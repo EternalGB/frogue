@@ -59,6 +59,12 @@ public class SpaceshipAlien : MonoBehaviour
 		canFire = true;
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if(col.gameObject.layer == LayerMask.NameToLayer("Kill"))
+			SendMessage("Destroy");
+	}
+
 
 }
 

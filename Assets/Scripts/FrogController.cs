@@ -129,6 +129,14 @@ public class FrogController : MonoBehaviour
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		//if in the kill layer
+		if((killLayer.value &1 << col.gameObject.layer) != 0) {
+			Die();
+		}
+	}
+
 	void Die()
 	{
 		Application.LoadLevel(0);

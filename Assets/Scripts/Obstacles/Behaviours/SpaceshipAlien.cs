@@ -65,6 +65,12 @@ public class SpaceshipAlien : MonoBehaviour
 			SendMessage("Destroy");
 	}
 
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if(col.gameObject.layer == LayerMask.NameToLayer("Kill"))
+			SendMessage("Destroy");
+	}
+
 
 }
 

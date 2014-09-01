@@ -19,6 +19,7 @@ public class PoolableSprite : PoolableObject
 	public override void Destroy()
 	{
 		transform.parent = null;
+		transform.rotation = Quaternion.identity;
 		GetComponent<SpriteRenderer>().sortingLayerID = 0;
 		base.Destroy();
 	}

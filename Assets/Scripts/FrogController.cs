@@ -95,7 +95,7 @@ public class FrogController : MonoBehaviour
 		predictor.SetPosition(0,initPos);
 		float timeDiff = maxTime/(numSlices-1);
 		for(int i = 1; i < numSlices; i++) {
-			Vector3 prediction = KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i);
+			Vector3 prediction = Util.KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i);
 			prediction.z = predictor.transform.position.z;
 			predictor.SetPosition(i,prediction);
 		}
@@ -107,19 +107,13 @@ public class FrogController : MonoBehaviour
 		List<Vector3> positions = new List<Vector3>(numSlices);
 		float timeDiff = maxTime/numSlices;
 		for(int i = 0; i < numSlices; i++) {
-			Vector3 next = KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i);
+			Vector3 next = Util.KinematicPrediction2D(initPos,initVel,Physics2D.gravity,timeDiff*i);
 			positions.Add(next);
 		}
 		return positions;
 	}
 
-	public static Vector3 KinematicPrediction2D(Vector3 p, Vector3 v, Vector3 a, float t)
-	{
-		Vector3 res = new Vector3();
-		res.x = p.x + v.x*t;
-		res.y = p.y + v.y*t + 0.5f*a.y*Mathf.Pow(t,2);
-		return res;
-	}
+
 
 	void OnCollisionEnter2D(Collision2D col)
 	{

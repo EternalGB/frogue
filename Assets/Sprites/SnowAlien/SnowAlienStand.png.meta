@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: cf53b7a36919b6841a507127fe76575a
+guid: 8a478b969a4f78244b2690d0fac8418b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: p2_jump
-    21300002: Alien1
+    21300000: alienBlue_stand
+    21300002: SnowAlienStand
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -36,10 +36,10 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 7
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 35
+  spritePixelsToUnits: 50
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

@@ -27,6 +27,8 @@ public class FrogController : MonoBehaviour
 	public float distanceTraveled = 0;
 	public int fliesCollected = 0;
 
+	public GameObject deathParticles;
+
 	public delegate void PlayerDeathHandler();
 	public static event PlayerDeathHandler Die; 
 
@@ -140,6 +142,8 @@ public class FrogController : MonoBehaviour
 	void HandleDie ()
 	{
 		gameObject.SetActive(false);
+		deathParticles.transform.position = transform.position;
+		deathParticles.SetActive(true);
 	}
 	
 

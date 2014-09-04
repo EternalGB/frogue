@@ -23,7 +23,7 @@ public class PlatformManager : MonoBehaviour
 
 	Vector2 nextPos;
 	ObjectPool platforms;
-	float distanceScaling = 1000;
+	float distanceScaling = 1;
 	public int difficulty = 1;
 
 	public AnimationCurve numObstCurve;

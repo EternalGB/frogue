@@ -146,7 +146,7 @@ public class PlatformManager : MonoBehaviour
 
 	void ChangeLevel()
 	{
-		print ("CHANGING LEVEL");
+		Debug.Log ("CHANGING LEVEL");
 		if(tsDict.ContainsKey(difficulty)) {
 			List<TileSet> potentialTileSets = tsDict[difficulty];
 			tileSet = potentialTileSets[Random.Range(0,potentialTileSets.Count)];

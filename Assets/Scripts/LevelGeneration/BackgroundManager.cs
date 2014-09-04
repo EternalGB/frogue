@@ -94,7 +94,7 @@ public class BackgroundManager : MonoBehaviour
 				numBackgroundActive++;
 			}
 			obj.SetActive(true);
-			print ("In tileset " + tileSet.name + " creating " + rep.name);
+			Debug.Log ("In tileset " + tileSet.name + " creating " + rep.name);
 		}
 	}
 
@@ -105,8 +105,6 @@ public class BackgroundManager : MonoBehaviour
 		frontLinePos = nextPos;
 		p.transform.localPosition = new Vector3(frontLinePos,p.transform.localPosition.y);
 		SetPanelTextures(p,tileSet);
-		//p.renderer.material = tileSet.backdrop;
-		//p.renderer.material.mainTextureOffset = new Vector2(Random.Range (0f,1f), Random.Range (0f,1f));
 		//Find where the new panel should go and update the panels after it to the new tileSet
 		int position = -1;
 		for(int i = 0; i < panels.Count; i++) {

@@ -27,6 +27,9 @@ public class FrogController : MonoBehaviour
 	public float distanceTraveled = 0;
 	public int fliesCollected = 0;
 
+	public delegate void PlayerDeathHandler();
+	public static event PlayerDeathHandler Die; 
+
 	public static FrogController Instance 
 	{
 		get; private set;
@@ -56,7 +59,10 @@ public class FrogController : MonoBehaviour
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+		Die += HandleDie;
 	}
+
+
 
 	// Update is called once per frame
 	void Update () 
@@ -131,9 +137,10 @@ public class FrogController : MonoBehaviour
 		}
 	}
 
-	void Die()
+	void HandleDie ()
 	{
-		Application.LoadLevel(0);
+		gameObject.SetActive(false);
 	}
+	
 
 }

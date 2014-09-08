@@ -35,9 +35,10 @@ public class GUIMain : MonoBehaviour
 			GUILayout.Label(metersTraveled + "m");
 			if(GUILayout.Button("Try Again?"))
 				Application.LoadLevel(0);
+			/*
 			if(GUILayout.Button("Quit"))
 				Application.Quit();
-
+			*/
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
 		}

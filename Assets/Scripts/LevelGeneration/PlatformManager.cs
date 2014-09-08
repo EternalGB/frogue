@@ -32,7 +32,7 @@ public class PlatformManager : MonoBehaviour
 	float obstChance = 0.25f;
 
 	int numLevelChanges = 0;
-	float levelThreshold = 100;
+	float levelThreshold = 50;
 	
 
 	void Start()
@@ -118,7 +118,7 @@ public class PlatformManager : MonoBehaviour
 	{
 		if(tileSet.airObstacles.Count > 0) {
 
-			GameObject obstRep = tileSet.airObstacles[Random.Range(0,tileSet.airObstacles.Count-1)];
+			GameObject obstRep = RandomUtil.GetRandomElement(tileSet.airObstacles);
 			Vector2 pos = nextPos + new Vector2(Random.Range (-width/2,width/2),Random.Range (4f,6f));
 			GameObject obst = PoolManager.Instance.GetPoolByRepresentative(obstRep).GetPooled();
 			if(obst != null) {
@@ -132,7 +132,7 @@ public class PlatformManager : MonoBehaviour
 	void GenPlatformObstacle(float width)
 	{
 		if(tileSet.platformObstacles.Count > 0) {
-			GameObject obstRep = tileSet.platformObstacles[Random.Range(0,tileSet.airObstacles.Count-1)];
+			GameObject obstRep = RandomUtil.GetRandomElement(tileSet.platformObstacles);
 			Vector2 pos = nextPos + new Vector2(Random.Range (-width/2,width/2),3);
 			GameObject obst = PoolManager.Instance.GetPoolByRepresentative(obstRep).GetPooled();
 			if(obst != null) {

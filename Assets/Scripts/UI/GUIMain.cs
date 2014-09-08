@@ -5,6 +5,8 @@ public class GUIMain : MonoBehaviour
 {
 
 	public GUISkin defaultSkin;
+	public Texture hungerBarBack;
+	public Texture hungerBarFront;
 
 	float origWidth = 1920;
 	float origHeight = 1080;
@@ -41,6 +43,11 @@ public class GUIMain : MonoBehaviour
 			*/
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
+		} else {
+			GUI.BeginGroup(new Rect(100,1000,1720,70));
+			GUI.Label(new Rect(0,0,200,40),"Food");
+			GUIUtil.DrawResourceBar(new Rect(0,35,1720,30),hungerBarBack,hungerBarFront,FrogController.Instance.foodAmount);
+			GUI.EndGroup ();
 		}
 
 		GUI.skin = unityDef;

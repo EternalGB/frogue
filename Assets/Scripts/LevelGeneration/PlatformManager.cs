@@ -31,9 +31,13 @@ public class PlatformManager : MonoBehaviour
 	public int activeObst = 0;
 	float obstChance = 0.25f;
 
+
 	int numLevelChanges = 0;
 	float levelThreshold = 50;
-	
+
+	public float pickupChance;
+	public GameObject foodPickup;
+
 
 	void Start()
 	{
@@ -102,6 +106,10 @@ public class PlatformManager : MonoBehaviour
 					GenPlatformObstacle(pp.actualWidth);
 			}
 
+			//potentially add a pickup
+			if(Random.value < pickupChance)
+				GenPickup(foodPickup,nextPos,pp.actualWidth);
+
 			//add some background decorations
 			if(bm.ObjAvailable && Random.value < bm.spawnChance)
 				bm.CreateBackgroundObj(tileSet, nextPos);
@@ -112,6 +120,13 @@ public class PlatformManager : MonoBehaviour
 				Mathf.Clamp(Random.Range (minGap.y, maxGap.y),minHeight,maxHeight));
 		}
 
+	}
+
+	void GenPickup(GameObject pickupRep, Vector2 platPos, float platWidth)
+	{
+		GameObject pickup = PoolManager.Instance.GetPoolByRepresentative(pickupRep).GetPooled ();
+		pickup.SetActive(true);
+		pickup.transform.position = platPos + RandomUtil.RandomVector(new Vector2(-platWidth,2),new Vector2(platWidth,6));
 	}
 
 	void GenAirObstacle(float width)

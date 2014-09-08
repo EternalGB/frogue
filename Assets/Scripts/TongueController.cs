@@ -90,7 +90,9 @@ public class TongueController : MonoBehaviour
 	{
 		PoolablePickup[] pickups = GetComponentsInChildren<PoolablePickup>();
 		foreach(PoolablePickup p in pickups) {
-			FrogController.Instance.fliesCollected++;
+			if(p.GetComponent<Food>() != null)
+				FrogController.Instance.foodAmount = Mathf.Clamp
+					(FrogController.Instance.foodAmount + p.GetComponent<Food>().foodValue,0,1);
 			p.transform.parent = null;
 			p.Destroy();
 		}

@@ -25,12 +25,14 @@ public class FrogController : MonoBehaviour
 	Animator anim;
 
 	public float distanceTraveled = 0;
-	public int fliesCollected = 0;
+	public float foodAmount = 1;
+	public float hungerRate;
 
 	public GameObject deathParticles;
 
 	public delegate void PlayerDeathHandler();
-	public static event PlayerDeathHandler Die; 
+	public static event PlayerDeathHandler Die;
+
 
 	public static FrogController Instance 
 	{
@@ -69,6 +71,9 @@ public class FrogController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		foodAmount -= hungerRate*Time.deltaTime;
+		if(foodAmount <= 0)
+			Die();
 		distanceTraveled = Mathf.Max(distanceTraveled,transform.position.x);
 		maxDist = maxPower/distPowerRatio;
 		onGround = Physics2D.OverlapCircle(groundCheck.position,0.2f,groundLayer);

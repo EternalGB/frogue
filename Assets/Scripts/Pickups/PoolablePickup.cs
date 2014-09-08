@@ -1,18 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
-public class PoolablePickup : PoolableObject
+public abstract class PoolablePickup : PoolableObject
 {
 
-	public float recycleOffset;
+	float recycleOffset = 25;
 
 
-
+	public abstract void ApplyEffect();
 
 	void Update()
 	{
 		if(enabled) {
 			if(transform.position.x + recycleOffset < FrogController.Instance.distanceTraveled) {
+				Debug.Log(name + " pickup being destroyed");
 				Destroy();
 			}
 		}

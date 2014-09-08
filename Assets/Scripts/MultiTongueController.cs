@@ -32,5 +32,17 @@ public class MultiTongueController : MonoBehaviour
 		}
 	}
 
+	public void AddTongue()
+	{
+		TongueController tc = tongues.Peek();
+		GameObject newTongue = (GameObject)GameObject.Instantiate(tc.gameObject,transform.position,Quaternion.identity);
+		newTongue.transform.parent = transform;
+		newTongue.transform.localScale = Vector3.one;
+		TongueController newTc = newTongue.GetComponent<TongueController>();
+		newTc.onCooldown = false;
+		newTc.isLicking = false;
+		tongues.Enqueue(newTongue.GetComponent<TongueController>());
+	}
+
 }
 

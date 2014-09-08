@@ -21,7 +21,7 @@ public class TongueController : MonoBehaviour
 	public Transform mouth;
 	public LayerMask grippable;
 
-	void Start()
+	void Awake()
 	{
 		lr = GetComponent<LineRenderer>();
 		sr = GetComponent<SpriteRenderer>();

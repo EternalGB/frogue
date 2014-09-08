@@ -13,7 +13,7 @@ public class FrogController : MonoBehaviour
 	public LineRenderer predictor;
 	public int predictionResolution;
 
-	public TongueController tongue;
+	public MultiTongueController tongues;
 	float maxDist;
 
 	public LayerMask killLayer;
@@ -97,8 +97,8 @@ public class FrogController : MonoBehaviour
 			rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
 			dragBall.transform.localPosition = Vector3.zero;
 			predictor.enabled = false;
-		} else if(Input.GetMouseButton(1) && tongue.CanLick()) {
-			tongue.Lick(MouseWorldPos);
+		} else if(Input.GetMouseButtonDown(1) && tongues.CanLick()) {
+			tongues.Lick(MouseWorldPos);
 		}
 	}
 

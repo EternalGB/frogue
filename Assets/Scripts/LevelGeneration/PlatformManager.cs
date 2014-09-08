@@ -29,7 +29,7 @@ public class PlatformManager : MonoBehaviour
 	public AnimationCurve numObstCurve;
 	public int numObst = 0;
 	public int activeObst = 0;
-	float obstChance = 0.25f;
+	float obstChance = 0.5f;
 
 
 	int numLevelChanges = 0;

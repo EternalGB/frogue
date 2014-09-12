@@ -149,6 +149,7 @@ public class FrogController : MonoBehaviour
 		gameObject.SetActive(false);
 		deathParticles.transform.position = transform.position;
 		deathParticles.SetActive(true);
+		Die -= HandleDie;
 	}
 	
 

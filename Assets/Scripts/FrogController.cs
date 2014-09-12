@@ -22,6 +22,8 @@ public class FrogController : MonoBehaviour
 
 	bool onGround;
 	bool canJump = false;
+	int numJumps = 1;
+	int timesJumped = 0;
 	Animator anim;
 
 	public float distanceTraveled = 0;
@@ -77,12 +79,17 @@ public class FrogController : MonoBehaviour
 		distanceTraveled = Mathf.Max(distanceTraveled,transform.position.x);
 		maxDist = maxPower/distPowerRatio;
 		onGround = Physics2D.OverlapCircle(groundCheck.position,0.2f,groundLayer);
+		if(timesJumped > 0 && onGround)
+			timesJumped = 0;
 		anim.SetBool("onGround",onGround);
-		canJump = onGround;
+		canJump = timesJumped < numJumps;
+
 		#if UNITY_EDITOR
 			canJump = true;
 		#endif
+
 		if(Input.GetMouseButton(0) && canJump) {
+
 			dragBall.GetComponent<SpriteRenderer>().enabled = true;
 			ballMove.x = Input.GetAxis("Mouse X");
 			ballMove.y = Input.GetAxis("Mouse Y");
@@ -91,12 +98,14 @@ public class FrogController : MonoBehaviour
 			Vector3 nextVel = ((transform.position - dragBall.position)*distPowerRatio);
 			predictor.enabled = true;
 			UpdatePredictions(transform.position,nextVel,5, predictionResolution);
+
 		} else if(Input.GetMouseButtonUp(0) && canJump) {
 			dragBall.GetComponent<SpriteRenderer>().enabled = false;
 			//fire the frog
 			rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
 			dragBall.transform.localPosition = Vector3.zero;
 			predictor.enabled = false;
+			timesJumped++;
 		} else if(Input.GetMouseButtonDown(1) && tongues.CanLick()) {
 			tongues.Lick(MouseWorldPos);
 		}
@@ -150,6 +159,11 @@ public class FrogController : MonoBehaviour
 		deathParticles.transform.position = transform.position;
 		deathParticles.SetActive(true);
 		Die -= HandleDie;
+	}
+
+	void AddJump()
+	{
+		numJumps++;
 	}
 	
 

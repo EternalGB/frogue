@@ -35,8 +35,11 @@ public class PlatformManager : MonoBehaviour
 	int numLevelChanges = 0;
 	float levelThreshold = 50;
 
-	public float pickupChance;
+	public float foodChance;
 	public GameObject foodPickup;
+
+	public float pickupChance;
+	public PickupTable pickups;
 
 
 	void Start()
@@ -60,7 +63,8 @@ public class PlatformManager : MonoBehaviour
 
 	void Update()
 	{
-
+		//reduce the chance of food spawning as the frog travels
+		foodChance = Mathf.Clamp(0.5f - FrogController.Instance.distanceTraveled/2000,0.05f,0.5f);
 
 		if(bm.PanelNeedsRecycling)
 			bm.RecyclePanel(bm.frontLinePos + bm.panelWidth,tileSet);
@@ -68,13 +72,11 @@ public class PlatformManager : MonoBehaviour
 		if(platforms.ObjectAvailable())
 			GenPlatform();
 
-				//TODO change tileset
-		//probably based on distance milestones?
+
 		difficulty = (int)tileSetDifficultyCurve.Evaluate(FrogController.Instance.distanceTraveled/distanceScaling);
 
 		numObst = (int)numObstCurve.Evaluate(FrogController.Instance.distanceTraveled/distanceScaling);
 
-		//TODO also change gap and tile width constraints over time
 		minGap.x = minGapCurve.Evaluate(FrogController.Instance.distanceTraveled/distanceScaling);
 		maxGap.x = maxGapCurve.Evaluate(FrogController.Instance.distanceTraveled/distanceScaling);
 
@@ -106,9 +108,13 @@ public class PlatformManager : MonoBehaviour
 					GenPlatformObstacle(pp.actualWidth);
 			}
 
-			//potentially add a pickup
-			if(Random.value < pickupChance)
+			//potentially add some food
+			if(Random.value < foodChance)
 				GenPickup(foodPickup,nextPos,pp.actualWidth);
+
+			//maybe spawn a pickup
+			if(Random.value < pickupChance)
+				GenPickup(pickups.GetRandom(),nextPos,pp.actualWidth);
 
 			//add some background decorations
 			if(bm.ObjAvailable && Random.value < bm.spawnChance)

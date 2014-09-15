@@ -35,6 +35,8 @@ public class PlatformManager : MonoBehaviour
 	int numLevelChanges = 0;
 	float levelThreshold = 50;
 
+	public LayerMask nonOverlappingLayers;
+
 	public float foodChance;
 	public GameObject foodPickup;
 
@@ -130,9 +132,15 @@ public class PlatformManager : MonoBehaviour
 
 	void GenPickup(GameObject pickupRep, Vector2 platPos, float platWidth)
 	{
+		//make sure the pickup doesn't spawn too close to something else
+		//TODO this could still run forever if the area is very cluttered
+		Vector2 spawnPos;
+		do {
+			spawnPos = platPos + RandomUtil.RandomVector(new Vector2(-platWidth,2),new Vector2(platWidth,6));
+		} while(Physics2D.OverlapCircle(spawnPos,2,nonOverlappingLayers));
 		GameObject pickup = PoolManager.Instance.GetPoolByRepresentative(pickupRep).GetPooled ();
 		pickup.SetActive(true);
-		pickup.transform.position = platPos + RandomUtil.RandomVector(new Vector2(-platWidth,2),new Vector2(platWidth,6));
+		pickup.transform.position = spawnPos;
 	}
 
 	void GenAirObstacle(float width)

@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 65abb6dfa83d6c443bdb5722cb2678dc
+guid: 061300164fc17f7458eb574a592bbfd7
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ladyBug_fly
+    21300000: shroomBrownAltBlock
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,10 +35,10 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: .5, y: .5}
+  alignment: 9
+  spritePivot: {x: .5, y: .75}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 59
+  spritePixelsToUnits: 35
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

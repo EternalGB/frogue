@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 65abb6dfa83d6c443bdb5722cb2678dc
+guid: 8bc376c81da42bb40934d31d4a6d6c95
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ladyBug_fly
+    21300000: stemBase
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 59
+  spritePixelsToUnits: 35
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

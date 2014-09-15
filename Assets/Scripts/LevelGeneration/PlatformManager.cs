@@ -124,7 +124,7 @@ public class PlatformManager : MonoBehaviour
 
 			//generate a new position, clamped inside the height bounds
 			nextPos += new Vector2(
-				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileSize,
+				Random.Range (minGap.x, maxGap.x) + width*tileSet.tileWidth,
 				Mathf.Clamp(Random.Range (minGap.y, maxGap.y),minHeight,maxHeight));
 		}
 

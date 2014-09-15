@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 65abb6dfa83d6c443bdb5722cb2678dc
+guid: 4cf40b13d706e574a877b966625896bc
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ladyBug_fly
+    21300000: mushroom
+    21300002: MushroomBG
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +39,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 59
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

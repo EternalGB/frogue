@@ -30,8 +30,8 @@ public class PoolablePlatform : PoolableObject
 		this.width = width;
 		transform.position = position;
 		this.tileSet = tileSet;
-		actualWidth = width*tileSet.tileSize;
-		boxCollider.size = new Vector2(actualWidth,tileSet.tileSize);
+		actualWidth = width*tileSet.tileWidth;
+		boxCollider.size = new Vector2(actualWidth,tileSet.tileHeight);
 		boxCollider.sharedMaterial = tileSet.physicsMaterial;
 		SetSprites();
 		if(tileSet.HasPlatformDecorations)
@@ -44,6 +44,7 @@ public class PoolablePlatform : PoolableObject
 			AddSpriteRenderers(tiles,width - tiles.Count);
 		}
 		Sprite nextTile;
+		tileSet.SetGroupRandom();
 		if(width == 1)
 			nextTile = tileSet.GetTile("Block");
 		else
@@ -52,11 +53,22 @@ public class PoolablePlatform : PoolableObject
 			tiles[i].enabled = true;
 			tiles[i].sprite = nextTile;
 			tiles[i].transform.position = transform.position - 
-				new Vector3(actualWidth/2 - tileSet.tileSize/2 - i*tileSet.tileSize,0);
+				new Vector3(actualWidth/2 - tileSet.tileWidth/2 - i*tileSet.tileWidth,0);
 			if(i == width-2)
 				nextTile = tileSet.GetTile("Right");
 			else
 				nextTile = tileSet.GetTile("Mid");
+		}
+		//create a base for the platform, if it exists
+		int baseHeight = 15;
+		if(tileSet.platformBases != null && tileSet.platformBases.Count > 0) {
+			AddSpriteRenderers(tiles,(baseHeight + width) - tiles.Count);
+			for(int i = width; i < width + baseHeight; i++) {
+				tiles[i].sprite = RandomUtil.GetRandomElement(tileSet.platformBases);
+				tiles[i].enabled = true;
+				tiles[i].transform.position = transform.position - new Vector3(0,boxCollider.size.y/2 + tileSet.tileWidth*(i-width));
+				tiles[i].sortingOrder = -2;
+			}
 		}
 	} 
 
@@ -72,7 +84,7 @@ public class PoolablePlatform : PoolableObject
 			nextDec = tileSet.platformDecorations[Random.Range(0,tileSet.platformDecorations.Count)];
 			//TODO add a little variation to the positions
 			nextLoc = transform.position - 
-				new Vector3(actualWidth/2 - tileSet.tileSize/2 - Random.Range (0,width)*tileSet.tileSize,-tileSet.tileSize/2);
+				new Vector3(actualWidth/2 - tileSet.tileWidth/2 - Random.Range (0,width)*tileSet.tileWidth,-tileSet.tileHeight/2);
 			decorations[i].enabled = true;
 			decorations[i].sprite = nextDec;
 			decorations[i].transform.position = nextLoc;
@@ -96,6 +108,7 @@ public class PoolablePlatform : PoolableObject
 			SpriteRenderer sr = (new GameObject()).AddComponent<SpriteRenderer>();
 			sr.enabled = false;
 			sr.sortingLayerName = "Foreground";
+			sr.sortingOrder = -1;
 			renderers.Add(sr);
 		}
 	}

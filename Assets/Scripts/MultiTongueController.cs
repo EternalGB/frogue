@@ -44,5 +44,11 @@ public class MultiTongueController : MonoBehaviour
 		tongues.Enqueue(newTongue.GetComponent<TongueController>());
 	}
 
+	public void IncreaseTongueLength(float amount)
+	{
+		foreach(TongueController tongue in tongues)
+			tongue.maxDist += amount;
+	}
+
 }
 

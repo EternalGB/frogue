@@ -9,5 +9,7 @@ public class PickupTableItem
 	public GameObject pickup;
 	public float relativeDropChance;
 
+
+
 }
 

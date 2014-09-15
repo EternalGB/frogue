@@ -4,7 +4,7 @@ using System.Collections;
 public class ExtraTongue : PoolablePickup
 {
 
-	public override void ApplyEffect ()
+	public override void PickupEffect ()
 	{
 		FrogController.Instance.tongues.AddTongue();
 	}

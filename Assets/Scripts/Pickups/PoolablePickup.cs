@@ -5,9 +5,15 @@ public abstract class PoolablePickup : PoolableObject
 {
 
 	float recycleOffset = 25;
+	public float pointValue;
 
+	public void ApplyEffect()
+	{
+		FrogController.Instance.score += pointValue;
+		PickupEffect();
+	}
 
-	public abstract void ApplyEffect();
+	public abstract void PickupEffect();
 
 	void Update()
 	{

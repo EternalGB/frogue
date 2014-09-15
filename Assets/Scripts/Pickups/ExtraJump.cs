@@ -4,7 +4,7 @@ using System.Collections;
 public class ExtraJump : PoolablePickup
 {
 
-	public override void ApplyEffect ()
+	public override void PickupEffect ()
 	{
 
 	}

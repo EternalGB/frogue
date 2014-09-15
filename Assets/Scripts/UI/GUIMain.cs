@@ -48,6 +48,9 @@ public class GUIMain : MonoBehaviour
 			GUI.Label(new Rect(0,0,200,40),"Food");
 			GUIUtil.DrawResourceBar(new Rect(0,35,1720,30),hungerBarBack,hungerBarFront,FrogController.Instance.foodAmount);
 			GUI.EndGroup ();
+
+			GUI.Label(new Rect(0,20,1920,200),Mathf.Floor(DistanceToScoreFunction(FrogController.Instance.distanceTraveled)
+			                                    + FrogController.Instance.score).ToString(),GUI.skin.GetStyle("Score"));
 		}
 
 		GUI.skin = unityDef;
@@ -58,6 +61,11 @@ public class GUIMain : MonoBehaviour
 	{
 		showDeathScreen = true;
 		metersTraveled = FrogController.Instance.distanceTraveled/10;
+	}
+
+	float DistanceToScoreFunction(float distance)
+	{
+		return distance;
 	}
 
 

@@ -35,6 +35,7 @@ public class FrogController : MonoBehaviour
 	public delegate void PlayerDeathHandler();
 	public static event PlayerDeathHandler Die;
 
+	public float score;
 
 	public static FrogController Instance 
 	{

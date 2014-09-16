@@ -143,6 +143,11 @@ public class FrogController : MonoBehaviour
 		//if in the kill layer
 		if((killLayer.value &1 << col.gameObject.layer) != 0) {
 			Die();
+		} else if(col.gameObject.layer == LayerMask.NameToLayer("Pickup")) {
+			PoolablePickup pickup = col.gameObject.GetComponent<PoolablePickup>();
+			pickup.ApplyEffect();
+			pickup.transform.parent = null;
+			pickup.Destroy();
 		}
 	}
 
@@ -151,6 +156,11 @@ public class FrogController : MonoBehaviour
 		//if in the kill layer
 		if((killLayer.value &1 << col.gameObject.layer) != 0) {
 			Die();
+		} else if(col.gameObject.layer == LayerMask.NameToLayer("Pickup")) {
+			PoolablePickup pickup = col.gameObject.GetComponent<PoolablePickup>();
+			pickup.ApplyEffect();
+			pickup.transform.parent = null;
+			pickup.Destroy();
 		}
 	}
 

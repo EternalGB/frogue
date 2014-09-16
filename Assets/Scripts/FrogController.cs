@@ -13,7 +13,7 @@ public class FrogController : MonoBehaviour
 	public LineRenderer predictor;
 	public int predictionResolution;
 
-	public MouthController tongues;
+	public MouthController mouth;
 	float maxDist;
 
 	public LayerMask killLayer;
@@ -22,7 +22,9 @@ public class FrogController : MonoBehaviour
 
 	bool onGround;
 	bool canJump = false;
+	bool checkGround = true;
 	public int numJumps = 1;
+	public bool canGlide;
 	int timesJumped = 0;
 	Animator anim;
 
@@ -71,18 +73,19 @@ public class FrogController : MonoBehaviour
 			Die();
 		distanceTraveled = Mathf.Max(distanceTraveled,transform.position.x);
 		maxDist = maxPower/distPowerRatio;
-		onGround = Physics2D.OverlapCircle(groundCheck.position,0.2f,groundLayer);
+		if(checkGround)
+			onGround = Physics2D.OverlapCircle(groundCheck.position,0.1f,groundLayer);
 		if(timesJumped > 0 && onGround)
 			timesJumped = 0;
 		anim.SetBool("onGround",onGround);
 		canJump = timesJumped < numJumps;
-
+/*
 		#if UNITY_EDITOR
 			canJump = true;
 		#endif
-
+*/
+		//start jump calc
 		if(Input.GetMouseButton(0) && canJump) {
-
 			dragBall.GetComponent<SpriteRenderer>().enabled = true;
 			ballMove.x = Input.GetAxis("Mouse X");
 			ballMove.y = Input.GetAxis("Mouse Y");
@@ -91,16 +94,29 @@ public class FrogController : MonoBehaviour
 			Vector3 nextVel = ((transform.position - dragBall.position)*distPowerRatio);
 			predictor.enabled = true;
 			UpdatePredictions(transform.position,nextVel,5, predictionResolution);
-
-		} else if(Input.GetMouseButtonUp(0) && canJump) {
-			dragBall.GetComponent<SpriteRenderer>().enabled = false;
-			//fire the frog
-			rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
-			dragBall.transform.localPosition = Vector3.zero;
-			predictor.enabled = false;
-			timesJumped++;
-		} else if(Input.GetMouseButtonDown(1) && tongues.CanActivate()) {
-			tongues.DoAvailableMouthAction();
+		//perform jump
+		} else if(Input.GetMouseButtonUp(0)) {
+			if(canJump) {
+				dragBall.GetComponent<SpriteRenderer>().enabled = false;
+				//fire the frog
+				rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
+				dragBall.transform.localPosition = Vector3.zero;
+				predictor.enabled = false;
+				if(timesJumped == 0) {
+					onGround = false;
+					checkGround = false;
+					StartCoroutine(Timers.Countdown(0.1f, delegate() {checkGround = true;}));
+				}
+				timesJumped++;
+			} else if(!onGround && canGlide) {
+				rigidbody2D.gravityScale = 1;
+			}
+		//gliding
+		} else if(canGlide && Input.GetMouseButton(0) && !onGround) {
+			rigidbody2D.gravityScale = 0;
+		//mouth stuff
+		} else if(Input.GetMouseButtonDown(1) && mouth.CanActivate()) {
+			mouth.DoAvailableMouthAction();
 		}
 	}
 

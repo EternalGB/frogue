@@ -22,7 +22,7 @@ public class FrogController : MonoBehaviour
 
 	bool onGround;
 	bool canJump = false;
-	int numJumps = 1;
+	public int numJumps = 1;
 	int timesJumped = 0;
 	Animator anim;
 
@@ -30,7 +30,7 @@ public class FrogController : MonoBehaviour
 	public float foodAmount = 1;
 	public float hungerRate;
 
-	public GameObject deathParticles;
+	//public GameObject deathParticles;
 
 	public delegate void PlayerDeathHandler();
 	public static event PlayerDeathHandler Die;
@@ -167,8 +167,8 @@ public class FrogController : MonoBehaviour
 	void HandleDie ()
 	{
 		gameObject.SetActive(false);
-		deathParticles.transform.position = transform.position;
-		deathParticles.SetActive(true);
+		//deathParticles.transform.position = transform.position;
+		//deathParticles.SetActive(true);
 		Die -= HandleDie;
 	}
 

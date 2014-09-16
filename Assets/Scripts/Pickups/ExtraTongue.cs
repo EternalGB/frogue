@@ -6,7 +6,7 @@ public class ExtraTongue : PoolablePickup
 
 	public override void PickupEffect ()
 	{
-		FrogController.Instance.tongues.AddTongue();
+		//FrogController.Instance.tongues.AddTongue();
 	}
 			
 }

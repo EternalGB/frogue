@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class FrogController : MonoBehaviour 
@@ -13,7 +13,7 @@ public class FrogController : MonoBehaviour
 	public LineRenderer predictor;
 	public int predictionResolution;
 
-	public MultiTongueController tongues;
+	public MouthController tongues;
 	float maxDist;
 
 	public LayerMask killLayer;
@@ -42,15 +42,7 @@ public class FrogController : MonoBehaviour
 		get; private set;
 	}
 
-	public Vector3 MouseWorldPos 
-	{
-		get 
-		{
-			Vector3 mousePos = Input.mousePosition;
-			mousePos.z = transform.position.z - Camera.main.transform.position.z;
-			return Camera.main.ScreenToWorldPoint(mousePos);
-		}
-	}
+
 
 	void Awake()
 	{
@@ -107,8 +99,8 @@ public class FrogController : MonoBehaviour
 			dragBall.transform.localPosition = Vector3.zero;
 			predictor.enabled = false;
 			timesJumped++;
-		} else if(Input.GetMouseButtonDown(1) && tongues.CanLick()) {
-			tongues.Lick(MouseWorldPos);
+		} else if(Input.GetMouseButtonDown(1) && tongues.CanActivate()) {
+			tongues.DoAvailableMouthAction();
 		}
 	}
 

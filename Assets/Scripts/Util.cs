@@ -4,6 +4,13 @@ using System.Collections;
 public class Util
 {
 
+	public static Vector3 MouseWorldPos(float zPos) 
+	{
+		Vector3 mousePos = Input.mousePosition;
+		mousePos.z = zPos - Camera.main.transform.position.z;
+		return Camera.main.ScreenToWorldPoint(mousePos);
+	}
+
 	public static bool InLayerMask(LayerMask mask, int layer)
 	{
 		return (mask.value &1 << layer) != 0;

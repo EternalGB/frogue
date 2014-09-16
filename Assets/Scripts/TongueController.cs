@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class TongueController : MonoBehaviour
+public class TongueController : MouthAction
 {
 
 	public bool isLicking = false;
@@ -13,9 +13,6 @@ public class TongueController : MonoBehaviour
 	public float pullPower;
 	Vector2 destination;
 	float distanceTravelled = 0;
-	public float cooldown;
-	public bool onCooldown = false;
-
 	LineRenderer lr;
 	SpriteRenderer sr;
 	public Transform mouth;
@@ -30,12 +27,17 @@ public class TongueController : MonoBehaviour
 		sr.enabled = false;
 	}
 
-	public bool CanLick()
+	public override void Action ()
+	{
+		Lick (Util.MouseWorldPos(FrogController.Instance.transform.position.z));
+	}
+
+	public override bool CanActivate()
 	{
 		return !isLicking && !onCooldown;
 	}
 
-	public void Lick(Vector2 position)
+	void Lick(Vector2 position)
 	{
 		isLicking = true;
 		onCooldown = true;

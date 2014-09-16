@@ -2,27 +2,19 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 public class GravZone : PoolableObstacle
 {
 
 	public float minGravMagnitude,maxGravMagnitude;
 	public Vector2 minSize, maxSize;
-	Vector2 gravity;
-	public Sprite directionalSprite;
-	public Sprite noDirectionSprite;
-	public Material directionalMat;
-	public Material noDirectionMat;
+	public Material mat;
 	public Transform zoneArea;
-	SpriteRenderer sr;
 	BoxCollider2D boxCol;
-	float flowSpeed = 0.1f;
+	float flowSpeed = 0.3f;
 
 	void OnEnable()
 	{
-		sr = GetComponent<SpriteRenderer>();
 		boxCol = (BoxCollider2D)collider2D;
-		SetGravity(Random.insideUnitCircle.normalized*Random.Range (minGravMagnitude,maxGravMagnitude));
 		SetArea(boxCol.center,RandomUtil.RandomVector(minSize,maxSize));
 	}
 
@@ -34,34 +26,11 @@ public class GravZone : PoolableObstacle
 		zoneArea.renderer.material.mainTextureScale = size;
 	}
 
-	public void SetGravity(Vector2 newGrav)
-	{
-		gravity = newGrav;
-		if(gravity != Vector2.zero) {
-			sr.sprite = directionalSprite;
-			Quaternion rot = Quaternion.FromToRotation(Vector2.right,newGrav.normalized);
-			transform.rotation = rot;
-			zoneArea.renderer.material = directionalMat;
-		} else {
-			sr.sprite = noDirectionSprite;
-			transform.rotation = Quaternion.identity;
-			zoneArea.renderer.material = noDirectionMat;
-		}
-		flowSpeed = gravity.magnitude/2;
-	}
-
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if(col.rigidbody2D != null && !col.rigidbody2D.isKinematic) {
 			col.rigidbody2D.gravityScale = 0;
 			//col.rigidbody2D.velocity = Vector2.zero;
-		}
-	}
-
-	void OnTriggerStay2D(Collider2D col)
-	{
-		if(col.rigidbody2D != null && !col.rigidbody2D.isKinematic) {
-			col.rigidbody2D.velocity += gravity*Time.fixedDeltaTime;
 		}
 	}
 
@@ -76,7 +45,7 @@ public class GravZone : PoolableObstacle
 
 	void Update()
 	{
-		zoneArea.renderer.material.mainTextureOffset = new Vector2(textureFlow,0);
+		zoneArea.renderer.material.mainTextureOffset = new Vector2(0,textureFlow);
 		textureFlow = -Mathf.Repeat(Time.time*flowSpeed,1);
 	}
 

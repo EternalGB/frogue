@@ -36,7 +36,7 @@ public class GUIMain : MonoBehaviour
 			GUILayout.Label("You hopped:");
 			GUILayout.Label(metersTraveled + "m");
 			if(GUILayout.Button("Try Again?"))
-				Application.LoadLevel(0);
+				Application.LoadLevel("main");
 			/*
 			if(GUILayout.Button("Quit"))
 				Application.Quit();

@@ -25,6 +25,9 @@ public class FrogController : MonoBehaviour
 	bool checkGround = true;
 	public int numJumps = 1;
 	public bool canGlide;
+	float glideAngle;
+	public float glideCoef;
+	public float dragCoef;
 	int timesJumped = 0;
 	Animator anim;
 
@@ -79,6 +82,10 @@ public class FrogController : MonoBehaviour
 			timesJumped = 0;
 		anim.SetBool("onGround",onGround);
 		canJump = timesJumped < numJumps;
+		if(!onGround) {
+			glideAngle = Mathf.Deg2Rad*Vector2.Angle
+			                         (rigidbody2D.velocity.normalized,new Vector2(rigidbody2D.velocity.x,0));
+		}
 /*
 		#if UNITY_EDITOR
 			canJump = true;
@@ -95,25 +102,25 @@ public class FrogController : MonoBehaviour
 			predictor.enabled = true;
 			UpdatePredictions(transform.position,nextVel,5, predictionResolution);
 		//perform jump
-		} else if(Input.GetMouseButtonUp(0)) {
-			if(canJump) {
-				dragBall.GetComponent<SpriteRenderer>().enabled = false;
-				//fire the frog
-				rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
-				dragBall.transform.localPosition = Vector3.zero;
-				predictor.enabled = false;
-				if(timesJumped == 0) {
-					onGround = false;
-					checkGround = false;
-					StartCoroutine(Timers.Countdown(0.1f, delegate() {checkGround = true;}));
-				}
-				timesJumped++;
-			} else if(!onGround && canGlide) {
-				rigidbody2D.gravityScale = 1;
+		} else if(Input.GetMouseButtonUp(0) && canJump) {
+			dragBall.GetComponent<SpriteRenderer>().enabled = false;
+			//fire the frog
+			rigidbody2D.velocity = ((transform.position - dragBall.position)*distPowerRatio);
+			dragBall.transform.localPosition = Vector3.zero;
+			predictor.enabled = false;
+			if(timesJumped == 0) {
+				onGround = false;
+				checkGround = false;
+				StartCoroutine(Timers.Countdown(0.1f, delegate() {checkGround = true;}));
 			}
+			timesJumped++;
 		//gliding
-		} else if(canGlide && Input.GetMouseButton(0) && !onGround) {
-			rigidbody2D.gravityScale = 0;
+		} else if(canGlide && Input.GetMouseButton(0) && !onGround && rigidbody2D.velocity.y < 0) {
+			Vector2 liftDir = Quaternion.AngleAxis(90,Vector3.forward)*rigidbody2D.velocity.normalized;
+			Debug.DrawLine(transform.position,transform.position + new Vector3(liftDir.x,liftDir.y));
+			Debug.DrawLine(transform.position,transform.position + new Vector3(rigidbody2D.velocity.x,rigidbody2D.velocity.y).normalized,Color.red);
+			rigidbody2D.velocity += Time.deltaTime*Mathf.Clamp (glideCoef*Mathf.Cos (glideAngle)/Mathf.Sin (glideAngle),0,glideCoef*10)*liftDir;
+			rigidbody2D.velocity -= rigidbody2D.velocity*dragCoef*Time.deltaTime;
 		//mouth stuff
 		} else if(Input.GetMouseButtonDown(1) && mouth.CanActivate()) {
 			mouth.DoAvailableMouthAction();

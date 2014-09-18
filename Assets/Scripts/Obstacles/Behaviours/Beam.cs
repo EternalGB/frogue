@@ -23,7 +23,11 @@ public class Beam : MonoBehaviour
 		this.turret = turret;
 		offset = transform.position - turret.position;
 	}
-	
+
+	void Destroy()
+	{
+		turret = null;
+	}
 
 }
 

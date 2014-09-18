@@ -29,7 +29,7 @@ public class PoolableObstacle : PoolableObject
 	void DisableObstacle(float duration)
 	{
 		//disable any behaviours that aren't obstacle behaviours
-		MonoBehaviour[] behaviours = GetComponents<MonoBehaviour>();
+		MonoBehaviour[] behaviours = GetComponentsInChildren<MonoBehaviour>();
 		foreach(MonoBehaviour b in behaviours) {
 			if(b.GetType() != typeof(PoolableObstacle))
 				b.enabled = false;
@@ -48,13 +48,13 @@ public class PoolableObstacle : PoolableObject
 		//reset layer to default
 		savedLayer = gameObject.layer;
 		gameObject.layer = 0;
-		StartCoroutine(Timers.Countdown(duration,EnableObstacle));
+		StartCoroutine(Timers.Countdown(duration,ReenableObstacle));
 	}
 
 	void EnableObstacle()
 	{
 		//reverse disable
-		MonoBehaviour[] behaviours = GetComponents<MonoBehaviour>();
+		MonoBehaviour[] behaviours = GetComponentsInChildren<MonoBehaviour>();
 		foreach(MonoBehaviour b in behaviours) {
 			if(b.GetType() != typeof(PoolableObstacle))
 				b.enabled = true;
@@ -70,6 +70,13 @@ public class PoolableObstacle : PoolableObject
 		}
 
 		gameObject.layer = savedLayer;
+	}
+
+	//this is so other behaviours on the object can have their own Disable and Enable
+	//to deal with more complicated obstacles
+	void ReenableObstacle()
+	{
+		gameObject.SendMessage("EnableObstacle");
 	}
 
 }

@@ -10,5 +10,11 @@ public class EnemyProjectile : PoolableProjectile
 			Destroy();
 	}
 
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if(col.gameObject.layer != LayerMask.NameToLayer("Frog"))
+			Destroy();
+	}
+
 }
 

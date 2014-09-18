@@ -4,10 +4,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(SpriteRenderer))]
 public class BeamTurret : MonoBehaviour
 {
-
-	public Sprite notFiringSprite;
-	public Sprite firingSprite;
-	SpriteRenderer sr;
+	
 	public Transform firingPosition;
 	public bool verticalFire;
 	public GameObject laserBeam;
@@ -22,23 +19,30 @@ public class BeamTurret : MonoBehaviour
 	public bool isFiring;
 	public float onTime;
 	public float offTime;
-
+	Animator anim;
+	float disableTime;
 
 	void OnEnable()
 	{
+
 		beamPool = PoolManager.Instance.GetPoolByRepresentative(laserBeam);
 		endPool = PoolManager.Instance.GetPoolByRepresentative(laserEnd);
-		sr = GetComponent<SpriteRenderer>();
 		laserLength = Random.Range (minLength,maxLength);
+		beams = new List<PoolableSprite>(laserLength);
+		anim = GetComponent<Animator>();
 		SetFiring(isFiring);
+	}
+
+	void Update()
+	{
+		anim.SetBool("firing",isFiring);
 	}
 
 	void SetFiring(bool firing)
 	{
 		if(firing) {
 			isFiring = true;
-			sr.sprite = firingSprite;
-			beams = new List<PoolableSprite>(laserLength);
+
 			for(int i = 0; i < laserLength; i++) {
 				PoolableSprite beam = beamPool.GetPooled().GetComponent<PoolableSprite>();
 
@@ -62,16 +66,38 @@ public class BeamTurret : MonoBehaviour
 			StartCoroutine(Timers.Countdown<bool>(onTime,SetFiring,false));
 		} else {
 			isFiring = false;
-			sr.sprite = notFiringSprite;
-			if(beams != null)
-				foreach(PoolableSprite beam in beams)
-					beam.Destroy();
-			if(end != null)
-				end.SendMessage ("Destroy");
+			TurnOffBeams();
 			StartCoroutine(Timers.Countdown<bool>(offTime,SetFiring,true));
 		}
 	}
 
+	void TurnOffBeams()
+	{
+		if(beams != null)
+			foreach(PoolableSprite beam in beams)
+				beam.Destroy();
+		if(end != null)
+			end.SendMessage ("Destroy");
+		beams.Clear();
+	}
+
+	void DisableObstacle()
+	{
+		isFiring = false;
+		anim.SetBool("firing",false);
+		TurnOffBeams();
+		StopAllCoroutines();
+		disableTime = Time.time;
+	}
+
+	void EnableObstacle()
+	{
+		if(disableTime + offTime < Time.time)
+			SetFiring(true);
+		else {
+			StartCoroutine(Timers.Countdown<bool>(disableTime + offTime - Time.time, SetFiring, true));
+		}
+	}
 			
 }
 

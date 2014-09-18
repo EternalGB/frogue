@@ -19,6 +19,7 @@ public class AimedTurret : MonoBehaviour
 	void OnEnable()
 	{
 		target = null;
+		canFire = true;
 		anim = GetComponent<Animator>();
 		projPool = PoolManager.Instance.GetPoolByRepresentative(projectile);
 	}

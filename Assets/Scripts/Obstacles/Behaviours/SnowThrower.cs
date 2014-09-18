@@ -23,6 +23,7 @@ public class SnowThrower : MonoBehaviour
 		anim = GetComponent<Animator>();
 		projPool = PoolManager.Instance.GetPoolByRepresentative(projectile);
 		throwingDir = new Vector2(-Mathf.Sqrt(2)/2f,Mathf.Sqrt(2)/2f);
+		canFire = true;
 	}
 
 	void Update()

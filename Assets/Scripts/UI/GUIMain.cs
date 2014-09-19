@@ -13,7 +13,7 @@ public class GUIMain : MonoBehaviour
 	Vector3 scale;
 
 	bool showDeathScreen = false;
-	float metersTraveled;
+	float finalScore;
 
 	void Start()
 	{
@@ -30,17 +30,19 @@ public class GUIMain : MonoBehaviour
 		GUISkin unityDef = GUI.skin;
 		GUI.skin = defaultSkin;
 		if(showDeathScreen) {
-			GUILayout.BeginArea(new Rect(640,270,640,540));
+			GUILayout.BeginArea(new Rect(640,270,640,540),defaultSkin.GetStyle("Message"));
 			GUILayout.BeginVertical();
 
-			GUILayout.Label("You hopped:");
-			GUILayout.Label(metersTraveled + "m");
+			GUILayout.Label("Your score:",defaultSkin.GetStyle("Message"));
+			GUILayout.Label(finalScore.ToString(),defaultSkin.GetStyle("Message"));
 			if(GUILayout.Button("Try Again?"))
 				Application.LoadLevel("main");
-			/*
+			if(GUILayout.Button("Select New Frog")) {
+				GameObject.Destroy(GameObject.Find("FrogSelector"));
+				Application.LoadLevel("frogSelect");
+			}
 			if(GUILayout.Button("Quit"))
 				Application.Quit();
-			*/
 			GUILayout.EndVertical();
 			GUILayout.EndArea();
 		} else {
@@ -60,7 +62,7 @@ public class GUIMain : MonoBehaviour
 	void HandlePlayerDeath()
 	{
 		showDeathScreen = true;
-		metersTraveled = FrogController.Instance.distanceTraveled/10;
+		finalScore = Mathf.Floor(FrogController.Instance.score + FrogController.Instance.distanceTraveled/10);
 	}
 
 	float DistanceToScoreFunction(float distance)

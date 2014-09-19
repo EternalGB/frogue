@@ -91,6 +91,7 @@ public class FrogController : MonoBehaviour
 			canJump = true;
 		#endif
 */
+		anim.SetBool("gliding",false);
 		//start jump calc
 		if(Input.GetMouseButton(0) && canJump) {
 			dragBall.GetComponent<SpriteRenderer>().enabled = true;
@@ -121,10 +122,12 @@ public class FrogController : MonoBehaviour
 			Debug.DrawLine(transform.position,transform.position + new Vector3(rigidbody2D.velocity.x,rigidbody2D.velocity.y).normalized,Color.red);
 			rigidbody2D.velocity += Time.deltaTime*Mathf.Clamp (glideCoef*Mathf.Cos (glideAngle)/Mathf.Sin (glideAngle),0,glideCoef*10)*liftDir;
 			rigidbody2D.velocity -= rigidbody2D.velocity*dragCoef*Time.deltaTime;
+			anim.SetBool("gliding",true);
 		//mouth stuff
 		} else if(Input.GetMouseButtonDown(1) && mouth.CanActivate()) {
 			mouth.DoAvailableMouthAction();
 		}
+
 	}
 
 	public void UpdatePredictions(Vector3 initPos, Vector3 initVel, float maxTime, int numSlices)
